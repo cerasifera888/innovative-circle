@@ -1,0 +1,36 @@
+---
+import Base from '../layouts/Base.astro';
+
+// No-JS fallback destination for the Netlify form `action`.
+// (With JS enabled, users see the inline success state and never reach here.)
+---
+
+<Base title="Thank you — Innovative Circle" description="Your fit call request has been received.">
+  <main class="flex min-h-screen flex-col items-center justify-center px-6 py-24 text-center">
+    <a href="/" class="mb-12 flex items-center gap-2.5 text-sm font-semibold tracking-tight">
+      <span class="inline-block h-3.5 w-3.5 rounded-full border-2 border-white"></span>
+      Innovative Circle
+    </a>
+
+    <div class="mx-auto inline-flex h-14 w-14 items-center justify-center rounded-full border border-hairline">
+      <svg class="h-7 w-7 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="m5 12.5 4.5 4.5L19 7"></path>
+      </svg>
+    </div>
+
+    <h1 class="mt-8 text-balance text-3xl font-semibold tracking-tight md:text-4xl">
+      Thank you. Your request is in.
+    </h1>
+    <p class="mx-auto mt-4 max-w-md text-lg text-mist/75">
+      We personally review every application and will reach out by email if there’s a strong
+      mutual fit.
+    </p>
+
+    <a
+      href="/"
+      class="mt-10 inline-flex items-center justify-center gap-2 rounded-full border border-hairline px-6 py-3 text-sm font-medium text-white transition hover:border-white/60 hover:bg-white/5"
+    >
+      ← Back to home
+    </a>
+  </main>
+</Base>

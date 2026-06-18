@@ -1,0 +1,70 @@
+---
+import Button from './Button.astro';
+
+interface Benefit {
+  title: string;
+}
+
+interface Props {
+  id: string;
+  eyebrow: string;
+  title: string;
+  subtitle: string;
+  benefits: Benefit[];
+  footnote?: { label: string; text: string };
+  tone?: 'ink' | 'coal';
+}
+
+const { id, eyebrow, title, subtitle, benefits, footnote, tone = 'ink' } = Astro.props;
+
+const sectionBg = tone === 'coal' ? 'bg-coal' : '';
+const cardBg = tone === 'coal' ? 'bg-graphite' : 'bg-coal';
+---
+
+<section id={id} class={`border-b border-hairline ${sectionBg}`}>
+  <div class="mx-auto max-w-6xl px-6 py-24 md:py-32">
+    <div class="max-w-3xl">
+      <p class="mb-5 text-xs uppercase tracking-[0.22em] text-fog">{eyebrow}</p>
+      <h2 class="text-balance text-3xl font-semibold leading-tight tracking-tight md:text-4xl lg:text-5xl">
+        {title}
+      </h2>
+      <p class="mt-6 text-lg text-mist/75">{subtitle}</p>
+    </div>
+
+    <ul class="mt-14 grid gap-5 sm:grid-cols-2">
+      {
+        benefits.map((b) => (
+          <li class={`flex gap-4 rounded-2xl border border-hairline ${cardBg} p-7 transition hover:border-mist/25`}>
+            <svg
+              class="mt-0.5 h-6 w-6 flex-none text-mist"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.5"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              aria-hidden="true"
+            >
+              <circle cx="12" cy="12" r="9" stroke-opacity="0.35" />
+              <path d="m8.5 12.5 2.5 2.5 4.5-5" />
+            </svg>
+            <span class="text-base font-medium leading-snug">{b.title}</span>
+          </li>
+        ))
+      }
+    </ul>
+
+    {
+      footnote && (
+        <p class="mt-10 max-w-3xl text-sm leading-relaxed text-fog">
+          <span class="font-medium text-mist">{footnote.label} </span>
+          {footnote.text}
+        </p>
+      )
+    }
+
+    <div class="mt-10">
+      <Button href="#book" size="lg">Book a Fit Call</Button>
+    </div>
+  </div>
+</section>

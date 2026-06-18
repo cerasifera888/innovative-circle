@@ -1,0 +1,64 @@
+---
+import Base from '../layouts/Base.astro';
+import Header from '../components/Header.astro';
+import Hero from '../components/Hero.astro';
+import WhatIs from '../components/WhatIs.astro';
+import HowItWorks from '../components/HowItWorks.astro';
+import AudienceBlock from '../components/AudienceBlock.astro';
+import SocialProof from '../components/SocialProof.astro';
+import WhyDifferent from '../components/WhyDifferent.astro';
+import FitCallForm from '../components/FitCallForm.astro';
+import Faq from '../components/Faq.astro';
+import Footer from '../components/Footer.astro';
+
+const techBenefits = [
+  { title: 'High-signal exposure to top-tier retail & e-commerce leaders' },
+  { title: 'Concrete market-fit feedback from real operational challenges' },
+  { title: 'Co-creation opportunities instead of transactional sales calls' },
+  { title: 'Credibility from association with leading Merchants' },
+];
+
+const merchantBenefits = [
+  { title: 'Curated access to emerging solutions that actually matter' },
+  { title: 'Direct dialogue with founders instead of sales pitches' },
+  { title: 'Active role in shaping solutions that fit your real challenges' },
+  { title: 'Reduced evaluation risk through contextual, human conversations' },
+];
+---
+
+<Base>
+  <Header />
+  <main>
+    <Hero />
+    <WhatIs />
+    <HowItWorks />
+
+    <AudienceBlock
+      id="tech-solutions"
+      tone="ink"
+      eyebrow="For Tech Solutions"
+      title="For Emerging Technology Founders & Teams"
+      subtitle="Get direct access to the decision-makers who actually buy and implement new technology."
+      benefits={techBenefits}
+      footnote={{
+        label: 'Who this is for:',
+        text: 'Early-stage companies (10–50 people) in AI Ads, GEO, AI Discoverability, Martech, Retailtech, and Conversion Rate Optimization.',
+      }}
+    />
+
+    <AudienceBlock
+      id="merchants"
+      tone="coal"
+      eyebrow="For Merchants & Retail Leaders"
+      title="For Retail & E-commerce Decision Makers"
+      subtitle="Gain privileged, vetted access to innovative technologies and their creators — without the noise."
+      benefits={merchantBenefits}
+    />
+
+    <SocialProof />
+    <WhyDifferent />
+    <FitCallForm />
+    <Faq />
+  </main>
+  <Footer />
+</Base>

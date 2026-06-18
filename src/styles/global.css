@@ -1,0 +1,50 @@
+@import "tailwindcss";
+
+/*
+  Design tokens — strict monochrome palette from the spec.
+  Brand colors: black #0A0A0A, dark grey #1F1F1F, light grey #E5E5E5, white.
+  A few intermediate greys are added for UI surfaces, hairline borders and
+  muted text (still within the monochrome system).
+*/
+@theme {
+  --color-ink: #ffffff; /* white — page background */
+  --color-coal: #f5f5f5; /* off-white — alternating bands / cards */
+  --color-graphite: #ebebeb; /* light grey — panels */
+  --color-hairline: #d4d4d4; /* thin borders on light */
+  --color-mist: #1f1f1f; /* dark grey — body text */
+  --color-fog: #6b6b6b; /* muted grey — captions, labels */
+
+  --font-sans: "Inter Variable", "Inter", ui-sans-serif, system-ui,
+    -apple-system, "Segoe UI", Roboto, sans-serif;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    /* offset anchor jumps so the sticky header doesn't cover section tops */
+    scroll-padding-top: 5rem;
+  }
+
+  body {
+    background-color: var(--color-ink);
+    color: #0a0a0a;
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  ::selection {
+    background: #0a0a0a;
+    color: #ffffff;
+  }
+
+  :focus-visible {
+    outline: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}

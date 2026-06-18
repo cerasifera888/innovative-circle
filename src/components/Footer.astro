@@ -1,0 +1,40 @@
+---
+// Contact is a PLACEHOLDER — replace with the real email / LinkedIn before launch.
+const contactEmail = 'hello@innovativecircle.example';
+---
+
+<footer class="bg-ink">
+  <div class="mx-auto max-w-6xl px-6 py-16">
+    <div class="flex flex-col gap-10 md:flex-row md:items-start md:justify-between">
+      <div class="max-w-xs">
+        <a href="#top" class="flex items-center gap-2.5 text-sm font-semibold tracking-tight">
+          <span class="inline-block h-3.5 w-3.5 rounded-full border-2 border-mist"></span>
+          Innovative Circle
+        </a>
+        <p class="mt-4 text-sm leading-relaxed text-fog">
+          A curated space for personal B2B collaboration in retail &amp; technology.
+        </p>
+      </div>
+
+      <nav class="flex flex-col gap-3 text-sm" aria-label="Footer">
+        <span class="text-xs uppercase tracking-[0.22em] text-fog/60">Explore</span>
+        <a class="text-mist/80 transition hover:text-mist" href="#what-is">What is Innovative Circle</a>
+        <a class="text-mist/80 transition hover:text-mist" href="#tech-solutions">For Tech Solutions</a>
+        <a class="text-mist/80 transition hover:text-mist" href="#merchants">For Merchants</a>
+      </nav>
+
+      <div class="flex flex-col gap-3 text-sm">
+        <span class="text-xs uppercase tracking-[0.22em] text-fog/60">Contact</span>
+        <a class="text-mist/80 transition hover:text-mist" href={`mailto:${contactEmail}`}>{contactEmail}</a>
+        <a class="text-mist/80 transition hover:text-mist" href="#book">Book a Fit Call</a>
+      </div>
+    </div>
+
+    <div
+      class="mt-12 flex flex-col gap-2 border-t border-hairline pt-8 text-xs text-fog/60 sm:flex-row sm:items-center sm:justify-between"
+    >
+      <span>© 2026 Innovative Circle. All rights reserved.</span>
+      <span>By personal referral only.</span>
+    </div>
+  </div>
+</footer>

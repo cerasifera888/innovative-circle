@@ -1,0 +1,14 @@
+<!-- Placeholder social card. NOTE: most social platforms do NOT render SVG OG
+     images — replace with a 1200x630 PNG/JPG (public/og-image.png) and update
+     the og:image path in src/layouts/Base.astro before launch. -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" width="1200" height="630">
+  <rect width="1200" height="630" fill="#0A0A0A" />
+  <circle cx="600" cy="250" r="120" fill="none" stroke="#2A2A2A" stroke-width="2" />
+  <circle cx="600" cy="250" r="60" fill="none" stroke="#ffffff" stroke-width="3" />
+  <g font-family="Inter, sans-serif" fill="#ffffff" text-anchor="middle">
+    <text x="600" y="470" font-size="52" font-weight="600">Innovative Circle</text>
+    <text x="600" y="528" font-size="26" fill="#8F8F8F" font-weight="400">
+      B2B sales better be led by humans.
+    </text>
+  </g>
+</svg>

@@ -1,0 +1,30 @@
+---
+import Button from './Button.astro';
+
+const links = [
+  { label: 'What is it', href: '#what-is' },
+  { label: 'For Tech Solutions', href: '#tech-solutions' },
+  { label: 'For Merchants', href: '#merchants' },
+];
+---
+
+<header class="sticky top-0 z-50 border-b border-hairline/70 bg-ink/80 backdrop-blur-md">
+  <div class="mx-auto flex max-w-6xl items-center justify-between gap-4 px-6 py-4">
+    <a href="#top" class="flex items-center gap-2.5 text-sm font-semibold tracking-tight">
+      <span class="inline-block h-3.5 w-3.5 rounded-full border-2 border-mist"></span>
+      Innovative Circle
+    </a>
+
+    <nav class="hidden items-center gap-8 lg:flex" aria-label="Primary">
+      {
+        links.map((l) => (
+          <a href={l.href} class="text-sm text-fog transition hover:text-mist">
+            {l.label}
+          </a>
+        ))
+      }
+    </nav>
+
+    <Button href="#book" size="md">Book a Fit Call</Button>
+  </div>
+</header>

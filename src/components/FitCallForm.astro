@@ -1,0 +1,160 @@
+---
+// Final CTA + lead-capture form.
+//
+// Netlify Forms: the `data-netlify` attribute + hidden `form-name` input make
+// Netlify capture submissions automatically (no backend). It detects the form
+// in the statically pre-rendered HTML at deploy time.
+//
+// Required fields: full name, LinkedIn, company, role, work email + consent.
+// Optional: WhatsApp. The JS below progressively enhances submission to stay
+// on-page (inline success); without JS it posts natively and lands on /success.
+
+const fields = [
+  { name: 'full-name', label: 'Full name', type: 'text', required: true, span: 1, autocomplete: 'name', placeholder: 'Jane Doe' },
+  { name: 'work-email', label: 'Work email', type: 'email', required: true, span: 1, autocomplete: 'email', placeholder: 'jane@company.com' },
+  { name: 'linkedin', label: 'LinkedIn profile', type: 'url', required: true, span: 2, autocomplete: 'url', placeholder: 'https://linkedin.com/in/…' },
+  { name: 'company', label: 'Company', type: 'text', required: true, span: 1, autocomplete: 'organization', placeholder: 'Company name' },
+  { name: 'role', label: 'Your role', type: 'text', required: true, span: 1, autocomplete: 'organization-title', placeholder: 'e.g. Head of E-commerce' },
+  { name: 'whatsapp', label: 'WhatsApp number', type: 'tel', required: false, span: 2, autocomplete: 'tel', placeholder: 'Optional' },
+];
+---
+
+<section id="book" class="border-b border-hairline bg-graphite">
+  <div class="mx-auto max-w-2xl px-6 py-24 md:py-32">
+    <div class="text-center">
+      <p class="mb-5 text-xs uppercase tracking-[0.22em] text-fog">Book your fit call</p>
+      <h2 class="text-balance text-3xl font-semibold leading-tight tracking-tight md:text-4xl">
+        Ready to explore meaningful collaboration?
+      </h2>
+      <p class="mx-auto mt-5 max-w-xl text-lg text-mist/75">
+        Join a short, personal conversation to see if Innovative Circle is the right fit for you.
+      </p>
+    </div>
+
+    <div id="form-wrap" class="mt-12">
+      <form
+        name="fit-call"
+        method="POST"
+        data-netlify="true"
+        netlify-honeypot="bot-field"
+        action="/success"
+      >
+        <!-- Netlify Forms plumbing -->
+        <input type="hidden" name="form-name" value="fit-call" />
+        <p class="hidden">
+          <label>Don’t fill this out if you’re human: <input name="bot-field" /></label>
+        </p>
+
+        <div class="grid gap-5 sm:grid-cols-2">
+          {
+            fields.map((f) => (
+              <label class={f.span === 2 ? 'block sm:col-span-2' : 'block'}>
+                <span class="mb-2 block text-sm text-mist">
+                  {f.label}
+                  {f.required ? (
+                    <span class="text-fog"> *</span>
+                  ) : (
+                    <span class="text-fog/70"> (optional)</span>
+                  )}
+                </span>
+                <input
+                  type={f.type}
+                  name={f.name}
+                  required={f.required}
+                  autocomplete={f.autocomplete}
+                  placeholder={f.placeholder}
+                  class="w-full rounded-xl border border-hairline bg-ink px-4 py-3 text-mist placeholder-fog/50 transition focus-visible:border-mist/50 focus-visible:ring-2 focus-visible:ring-mist/20"
+                />
+              </label>
+            ))
+          }
+        </div>
+
+        <label class="mt-6 flex items-start gap-3 text-sm text-fog">
+          <input
+            type="checkbox"
+            name="consent"
+            required
+            class="mt-0.5 h-4 w-4 flex-none rounded border-hairline bg-ink accent-mist"
+          />
+          <span>
+            I agree to be contacted about my application. Innovative Circle uses these details
+            only to assess mutual fit.
+          </span>
+        </label>
+
+        <button
+          type="submit"
+          class="mt-8 inline-flex w-full items-center justify-center gap-2 rounded-full bg-mist px-7 py-4 text-base font-medium tracking-tight text-ink transition hover:bg-fog focus-visible:ring-2 focus-visible:ring-mist/70 focus-visible:ring-offset-2 focus-visible:ring-offset-graphite disabled:opacity-60"
+        >
+          Request a Fit Call
+        </button>
+
+        <p class="mt-5 text-center text-sm text-fog">
+          We personally review every application. Only strong mutual fits are invited to join.
+        </p>
+      </form>
+    </div>
+
+    <!-- Inline success state (shown after a successful JS submission) -->
+    <div id="form-success" class="hidden">
+      <div class="rounded-2xl border border-hairline bg-coal p-10 text-center">
+        <div class="mx-auto mb-5 inline-flex h-12 w-12 items-center justify-center rounded-full border border-hairline">
+          <svg class="h-6 w-6 text-mist" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="m5 12.5 4.5 4.5L19 7" />
+          </svg>
+        </div>
+        <h3 class="text-2xl font-semibold tracking-tight">Thank you. Your request is in.</h3>
+        <p class="mx-auto mt-3 max-w-md text-mist/75">
+          We personally review every application and will reach out by email if there’s a strong
+          mutual fit.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  const form = document.querySelector<HTMLFormElement>('form[name="fit-call"]');
+
+  if (form) {
+    form.addEventListener('submit', async (event) => {
+      // Let the browser run native HTML5 validation first.
+      if (!form.checkValidity()) return;
+
+      event.preventDefault();
+
+      const button = form.querySelector<HTMLButtonElement>('button[type="submit"]');
+      const originalLabel = button?.textContent ?? 'Request a Fit Call';
+      if (button) {
+        button.disabled = true;
+        button.textContent = 'Sending…';
+      }
+
+      try {
+        const body = new URLSearchParams(new FormData(form) as unknown as Record<string, string>);
+        const response = await fetch('/', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+          body: body.toString(),
+        });
+
+        if (!response.ok) throw new Error(`Form submission failed: ${response.status}`);
+
+        // Fire a conversion event for analytics (no-op until analytics is enabled).
+        (window as any).plausible?.('fit_call_request');
+        (window as any).gtag?.('event', 'fit_call_request');
+
+        const wrap = document.getElementById('form-wrap');
+        const success = document.getElementById('form-success');
+        wrap?.classList.add('hidden');
+        success?.classList.remove('hidden');
+        success?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      } catch (error) {
+        // Network/JS failure — fall back to a native submit so the lead is never lost.
+        console.error(error);
+        form.submit();
+      }
+    });
+  }
+</script>

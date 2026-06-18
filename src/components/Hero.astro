@@ -1,0 +1,77 @@
+---
+import Button from './Button.astro';
+---
+
+<section id="top" class="relative overflow-hidden border-b border-hairline">
+  <!-- Abstract "human network" backdrop (pure CSS/SVG, no external assets) -->
+  <div class="pointer-events-none absolute inset-0 -z-10" aria-hidden="true">
+    <!-- dotted node grid, masked to a soft ellipse -->
+    <div
+      class="absolute inset-0"
+      style="background-image: radial-gradient(rgba(0,0,0,0.12) 1px, transparent 1.3px); background-size: 26px 26px; -webkit-mask-image: radial-gradient(ellipse 70% 60% at 50% 32%, #000 0%, transparent 78%); mask-image: radial-gradient(ellipse 70% 60% at 50% 32%, #000 0%, transparent 78%);"
+    >
+    </div>
+    <!-- top glow -->
+    <div
+      class="absolute inset-x-0 top-0 h-[460px]"
+      style="background: radial-gradient(ellipse 60% 100% at 50% 0%, rgba(0,0,0,0.04), transparent 70%);"
+    >
+    </div>
+    <!-- connecting nodes -->
+    <svg
+      class="absolute left-1/2 top-12 hidden -translate-x-1/2 opacity-25 md:block"
+      width="940"
+      height="360"
+      viewBox="0 0 940 360"
+      fill="none"
+    >
+      <g stroke="#0a0a0a" stroke-width="1" stroke-opacity="0.15">
+        <line x1="120" y1="80" x2="360" y2="190"></line>
+        <line x1="360" y1="190" x2="580" y2="90"></line>
+        <line x1="580" y1="90" x2="820" y2="210"></line>
+        <line x1="360" y1="190" x2="450" y2="320"></line>
+        <line x1="580" y1="90" x2="670" y2="300"></line>
+      </g>
+      <g fill="#0a0a0a">
+        <circle cx="120" cy="80" r="3"></circle>
+        <circle cx="360" cy="190" r="4.5"></circle>
+        <circle cx="580" cy="90" r="3.5"></circle>
+        <circle cx="820" cy="210" r="3"></circle>
+        <circle cx="450" cy="320" r="3"></circle>
+        <circle cx="670" cy="300" r="3"></circle>
+      </g>
+    </svg>
+    <!-- fade into the page -->
+    <div
+      class="absolute inset-x-0 bottom-0 h-40"
+      style="background: linear-gradient(to bottom, transparent, #ffffff);"
+    >
+    </div>
+  </div>
+
+  <div class="mx-auto max-w-5xl px-6 py-28 text-center md:py-40">
+    <p
+      class="mb-7 inline-flex items-center gap-2 rounded-full border border-hairline px-4 py-1.5 text-xs uppercase tracking-[0.22em] text-fog"
+    >
+      By personal referral only
+    </p>
+
+    <h1
+      class="mx-auto max-w-4xl text-balance text-4xl font-semibold leading-[1.04] tracking-tight sm:text-5xl md:text-6xl lg:text-7xl"
+    >
+      B2B sales better be led by humans.
+      <span class="text-fog">Not by the noisy automations.</span>
+    </h1>
+
+    <p class="mx-auto mt-8 max-w-2xl text-balance text-lg text-mist/80 md:text-xl">
+      Innovative Circle is a curated, human-centric club where top retail &amp; e-commerce
+      leaders and emerging technology founders connect personally to explore real challenges
+      and co-create better solutions.
+    </p>
+
+    <div class="mt-11 flex flex-col items-center justify-center gap-5 sm:flex-row">
+      <Button href="#book" size="lg">Book a Fit Call</Button>
+      <span class="text-sm text-fog">20-minute conversation to validate mutual fit</span>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,45 @@
+---
+const faqs = [
+  {
+    q: 'Who can join?',
+    a: 'Top-tier retail & e-commerce leaders and early-stage technology companies (typically 10–50 people) working on relevant solutions.',
+  },
+  {
+    q: 'Is there a cost to participate?',
+    a: 'Innovative Circle is currently invitation-based through personal fit conversations.',
+  },
+  {
+    q: 'How long is the call?',
+    a: 'Usually 20–30 minutes.',
+  },
+  {
+    q: 'What happens after the call?',
+    a: 'If there’s strong mutual fit, we’ll invite you to join upcoming sessions and connect with relevant peers.',
+  },
+];
+---
+
+<section id="faq" class="border-b border-hairline">
+  <div class="mx-auto max-w-3xl px-6 py-24 md:py-32">
+    <div class="text-center">
+      <p class="mb-5 text-xs uppercase tracking-[0.22em] text-fog">FAQ</p>
+      <h2 class="text-3xl font-semibold tracking-tight md:text-4xl">Good to know</h2>
+    </div>
+
+    <div class="mt-12 border-y border-hairline">
+      {
+        faqs.map((f) => (
+          <details class="group border-b border-hairline last:border-b-0">
+            <summary class="flex cursor-pointer list-none items-center justify-between gap-4 py-6 text-lg font-medium [&::-webkit-details-marker]:hidden">
+              {f.q}
+              <span class="flex-none text-2xl font-light text-fog transition-transform duration-200 group-open:rotate-45">
+                +
+              </span>
+            </summary>
+            <p class="pb-6 leading-relaxed text-mist/70">{f.a}</p>
+          </details>
+        ))
+      }
+    </div>
+  </div>
+</section>

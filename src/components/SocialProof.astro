@@ -1,0 +1,46 @@
+---
+// Real participants — the strongest trust element per the spec.
+// Logos are PLACEHOLDERS (wordmarks). Drop official assets into
+// /public/logos/<slug>.svg and swap the <span> for an <img> (see README).
+const participants = [
+  { name: 'Guess', role: 'Chief Digital Officer', slug: 'guess' },
+  { name: 'Mars', role: 'Global Digital Commerce & eB2B Director', slug: 'mars' },
+  { name: 'Baleària', role: 'E-commerce & Customer Experience Director', slug: 'balearia' },
+  { name: 'Diageo', role: 'Global Director, Connected Commerce', slug: 'diageo' },
+  { name: 'Decathlon', role: 'Chief Digital Officer', slug: 'decathlon' },
+  { name: 'Rakuten France', role: 'Executive Vice President of Finance', slug: 'rakuten' },
+  { name: 'Schwarz Digits', role: 'Head of Innovation', slug: 'schwarz' },
+  { name: 'Unilever', role: 'Digital Marketing, Media and Commerce Lead', slug: 'unilever' },
+];
+---
+
+<section id="participants" class="border-b border-hairline bg-coal">
+  <div class="mx-auto max-w-6xl px-6 py-24 md:py-28">
+    <p class="text-center text-sm text-fog">
+      Leaders from these companies have already joined the Circle
+    </p>
+
+    <ul
+      class="mt-12 grid grid-cols-2 gap-px overflow-hidden rounded-2xl border border-hairline bg-hairline sm:grid-cols-4"
+    >
+      {
+        participants.map((p) => (
+          <li
+            class="flex flex-col items-center justify-center gap-3 bg-coal p-8 text-center"
+            data-logo={p.slug}
+          >
+            {/* LOGO PLACEHOLDER — replace with <img src={`/logos/${p.slug}.svg`} alt={p.name} /> */}
+            <span class="flex h-9 items-center text-lg font-semibold tracking-tight text-mist">
+              {p.name}
+            </span>
+            <span class="text-xs leading-snug text-fog">{p.role}</span>
+          </li>
+        ))
+      }
+    </ul>
+
+    <p class="mt-6 text-center text-xs text-fog/70">
+      Company names shown as placeholders — replace with official brand logos before launch.
+    </p>
+  </div>
+</section>
