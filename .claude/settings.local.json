@@ -4,7 +4,8 @@
       "mcp__Claude_Preview__preview_start",
       "Bash(npm install *)",
       "Bash(curl -s https://api.github.com/repos/cerasifera888/innovative-circle)",
-      "mcp__visualize__read_me"
+      "mcp__visualize__read_me",
+      "Bash(netlify status *)"
     ]
   }
 }
