@@ -7,37 +7,37 @@ const attendees = [
     name: 'Decathlon',
     role: 'Chief Digital Officer',
     slug: 'Decathlon',
-    techNames: ['Name', 'Name Name'],
+    techNames: ['Name', 'Name', 'Name'],
   },
   {
     name: 'Rakuten',
     role: 'Executive Vice President of Finance',
     slug: 'Rakuten',
-    techNames: ['Name', 'Name Name'],
+    techNames: ['Name', 'Name', 'Name'],
   },
   {
     name: 'Guess',
     role: 'Chief Digital Officer',
     slug: 'guess',
-    techNames: ['Name', 'Name Name'],
+    techNames: ['Name', 'Name', 'Name'],
   },
   {
     name: 'Unilever',
     role: 'Digital Marketing, Media & Commerce Lead',
     slug: 'Unilever',
-    techNames: ['Name', 'Name Name'],
+    techNames: ['Name', 'Name', 'Name'],
   },
   {
     name: 'Mars',
     role: 'Global Digital Commerce & eB2B Director',
     slug: 'mars',
-    techNames: ['Name', 'Name Name'],
+    techNames: ['Name', 'Name', 'Name'],
   },
   {
     name: 'Diageo',
     role: 'Global Director, Connected Commerce',
     slug: 'Diageo',
-    techNames: ['Name', 'Name Name'],
+    techNames: ['Name', 'Name', 'Name'],
   },
 ];
 ---
@@ -55,8 +55,14 @@ const attendees = [
         attendees.map((a) => (
           <li class="attendee-card">
             <div class="icons-row">
-              <span class="icon-retail" aria-hidden="true">🛒</span>
-              <span class="icon-tech" aria-hidden="true">💻</span>
+              <div class="icon-col icon-col-retail">
+                <span class="icon-retail" aria-hidden="true">🛒</span>
+                <span class="icon-label">Retailer Attendee</span>
+              </div>
+              <div class="icon-col icon-col-tech">
+                <span class="icon-tech" aria-hidden="true">💻</span>
+                <span class="icon-label">Tech Attendee</span>
+              </div>
             </div>
 
             <div class="card-content">
@@ -94,21 +100,55 @@ const attendees = [
 
   .icons-row {
     display: flex;
-    align-items: center;
+    align-items: flex-start;
     justify-content: space-between;
     font-size: 1.125rem;
     line-height: 1;
   }
 
+  .icon-col {
+    display: flex;
+    flex-direction: column;
+    gap: 0.375rem;
+  }
+
+  .icon-col-retail {
+    align-items: flex-start;
+  }
+
+  .icon-col-tech {
+    align-items: flex-end;
+  }
+
+  .icon-retail,
   .icon-tech {
     opacity: 0;
-    transform: translateX(4px);
     transition: opacity 0.25s ease, transform 0.25s ease;
   }
 
+  .icon-retail {
+    transform: translateX(-4px);
+  }
+
+  .icon-tech {
+    transform: translateX(4px);
+  }
+
+  .icon-label {
+    font-size: 0.6875rem;
+    color: var(--color-fog);
+    opacity: 0;
+    transition: opacity 0.25s ease;
+  }
+
+  .attendee-card:hover .icon-retail,
   .attendee-card:hover .icon-tech {
     opacity: 1;
     transform: translateX(0);
+  }
+
+  .attendee-card:hover .icon-label {
+    opacity: 1;
   }
 
   .card-content {
