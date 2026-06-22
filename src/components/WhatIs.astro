@@ -1,25 +1,188 @@
 ---
-// "What is Innovative Circle?" — section copy verbatim from the MVP spec.
+// "Who has attended the meetings so far?" — evidence section.
+// Card hover reveals which Tech Solutions attendees met each Merchant.
+// TODO: replace placeholder attendee names with the real list once provided.
+const attendees = [
+  {
+    name: 'Decathlon',
+    role: 'Chief Digital Officer',
+    slug: 'Decathlon',
+    techNames: ['Name', 'Name Name'],
+  },
+  {
+    name: 'Rakuten',
+    role: 'Executive Vice President of Finance',
+    slug: 'Rakuten',
+    techNames: ['Name', 'Name Name'],
+  },
+  {
+    name: 'Guess',
+    role: 'Chief Digital Officer',
+    slug: 'guess',
+    techNames: ['Name', 'Name Name'],
+  },
+  {
+    name: 'Unilever',
+    role: 'Digital Marketing, Media & Commerce Lead',
+    slug: 'Unilever',
+    techNames: ['Name', 'Name Name'],
+  },
+  {
+    name: 'Mars',
+    role: 'Global Digital Commerce & eB2B Director',
+    slug: 'mars',
+    techNames: ['Name', 'Name Name'],
+  },
+  {
+    name: 'Diageo',
+    role: 'Global Director, Connected Commerce',
+    slug: 'Diageo',
+    techNames: ['Name', 'Name Name'],
+  },
+];
 ---
 
-<section id="what-is" class="border-b border-hairline">
-  <div class="mx-auto max-w-4xl px-6 py-24 text-center md:py-32">
-    <p class="mb-5 text-xs uppercase tracking-[0.22em] text-fog">What is Innovative Circle?</p>
-
-    <h2 class="text-balance text-3xl font-semibold leading-tight tracking-tight md:text-4xl lg:text-5xl">
-      A private space for real conversations in retail &amp; technology.
+<section id="what-is" class="border-b border-hairline bg-white">
+  <div class="mx-auto max-w-7xl px-6 py-10 md:py-20">
+    <h2
+      class="mb-12 text-center text-2xl font-semibold uppercase tracking-[0.1em] text-mist md:mb-16 md:text-3xl"
+    >
+      Who has attended the meetings so far?
     </h2>
 
-    <p class="mx-auto mt-8 max-w-3xl text-lg leading-relaxed text-mist/75">
-      In a world full of automated outreach and generic pitches, Innovative Circle brings
-      together carefully selected retail and e-commerce leaders with innovative technology
-      founders. Through personal interactions, we help Merchants gain privileged access to
-      emerging solutions and Tech Solutions receive high-quality validation and market-fit
-      insights from real decision-makers.
-    </p>
+    <ul class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+      {
+        attendees.map((a) => (
+          <li class="attendee-card">
+            <div class="icons-row">
+              <span class="icon-retail" aria-hidden="true">🛒</span>
+              <span class="icon-tech" aria-hidden="true">💻</span>
+            </div>
 
-    <p class="mx-auto mt-8 max-w-xl border-t border-hairline pt-8 text-sm italic text-fog">
-      Supporting personal human interactions in B2B communication in the automation-noisy world.
-    </p>
+            <div class="card-content">
+              <div class="logo-wrap">
+                <img src={`/logos/${a.slug}.png`} alt={a.name} loading="lazy" />
+              </div>
+
+              <ul class="tech-names" aria-hidden="true">
+                {a.techNames.map((n) => <li>{n}</li>)}
+              </ul>
+            </div>
+
+            <p class="role">{a.role}</p>
+          </li>
+        ))
+      }
+    </ul>
   </div>
 </section>
+
+<style>
+  .attendee-card {
+    position: relative;
+    background: #f9f9f9;
+    border: 1px solid #e5e5e5;
+    border-radius: 8px;
+    padding: 20px;
+    overflow: hidden;
+    transition: border-color 0.25s ease;
+  }
+
+  .attendee-card:hover {
+    border-color: #cfcfcf;
+  }
+
+  .icons-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 1.125rem;
+    line-height: 1;
+  }
+
+  .icon-tech {
+    opacity: 0;
+    transform: translateX(4px);
+    transition: opacity 0.25s ease, transform 0.25s ease;
+  }
+
+  .attendee-card:hover .icon-tech {
+    opacity: 1;
+    transform: translateX(0);
+  }
+
+  .card-content {
+    position: relative;
+    height: 2.75rem;
+    margin-top: 1.25rem;
+  }
+
+  .logo-wrap {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    height: 2.25rem;
+    display: flex;
+    align-items: center;
+    transform: translate(-50%, -50%);
+    transition: left 0.35s ease, transform 0.35s ease;
+  }
+
+  .attendee-card:hover .logo-wrap {
+    left: 0;
+    transform: translate(0, -50%);
+  }
+
+  .logo-wrap img {
+    max-height: 100%;
+    max-width: 7rem;
+    object-fit: contain;
+  }
+
+  .tech-names {
+    position: absolute;
+    top: 50%;
+    right: 0;
+    margin: 0;
+    list-style: none;
+    text-align: right;
+    opacity: 0;
+    transform: translate(8px, -50%);
+    transition: opacity 0.3s ease 0.05s, transform 0.3s ease 0.05s;
+    pointer-events: none;
+  }
+
+  .attendee-card:hover .tech-names {
+    opacity: 1;
+    transform: translate(0, -50%);
+  }
+
+  .tech-names li {
+    font-size: 0.8125rem;
+    font-weight: 600;
+    line-height: 1.4;
+    color: #0a0a0a;
+  }
+
+  .role {
+    margin-top: 1rem;
+    text-align: center;
+    font-size: 0.8125rem;
+    color: var(--color-fog);
+    transition: opacity 0.2s ease;
+  }
+
+  .attendee-card:hover .role {
+    opacity: 0;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .attendee-card,
+    .icon-tech,
+    .logo-wrap,
+    .tech-names,
+    .role {
+      transition: none;
+    }
+  }
+</style>
