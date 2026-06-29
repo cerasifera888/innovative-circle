@@ -5,7 +5,8 @@
       "Bash(npm install *)",
       "Bash(curl -s https://api.github.com/repos/cerasifera888/innovative-circle)",
       "mcp__visualize__read_me",
-      "Bash(netlify status *)"
+      "Bash(netlify status *)",
+      "WebFetch(domain:www.takeinitiativ.com)"
     ]
   }
 }
