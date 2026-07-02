@@ -6,7 +6,14 @@
       "Bash(curl -s https://api.github.com/repos/cerasifera888/innovative-circle)",
       "mcp__visualize__read_me",
       "Bash(netlify status *)",
-      "WebFetch(domain:www.takeinitiativ.com)"
+      "WebFetch(domain:www.takeinitiativ.com)",
+      "Bash(cp \"Bambuser-Logo.png\" bambuser.png)",
+      "Bash(cp \"Admotion_ai logo.svg\" admotion.svg)",
+      "Bash(cp \"Dresma logo.svg\" dresma.svg)",
+      "Bash(cp \"Glanceable logo.svg\" glanceable.svg)",
+      "Bash(cp \"Quiver logo.svg\" quiver.svg)",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\" http://localhost:4321/logos/decathlon.svg)",
+      "Bash(grep -in \"logos\\\\|tech\\\\|public\" .gitignore)"
     ]
   }
 }

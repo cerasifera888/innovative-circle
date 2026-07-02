@@ -1,228 +1,294 @@
 ---
-// "Who has attended the meetings so far?" — evidence section.
-// Card hover reveals which Tech Solutions attendees met each Merchant.
-// TODO: replace placeholder attendee names with the real list once provided.
-const attendees = [
-  {
-    name: 'Decathlon',
-    role: 'Chief Digital Officer',
-    slug: 'Decathlon',
-    techNames: ['Name', 'Name', 'Name'],
-  },
-  {
-    name: 'Rakuten',
-    role: 'Executive Vice President of Finance',
-    slug: 'Rakuten',
-    techNames: ['Name', 'Name', 'Name'],
-  },
-  {
-    name: 'Guess',
-    role: 'Chief Digital Officer',
-    slug: 'guess',
-    techNames: ['Name', 'Name', 'Name'],
-  },
-  {
-    name: 'Unilever',
-    role: 'Digital Marketing, Media & Commerce Lead',
-    slug: 'Unilever',
-    techNames: ['Name', 'Name', 'Name'],
-  },
-  {
-    name: 'Mars',
-    role: 'Global Digital Commerce & eB2B Director',
-    slug: 'mars',
-    techNames: ['Name', 'Name', 'Name'],
-  },
-  {
-    name: 'Diageo',
-    role: 'Global Director, Connected Commerce',
-    slug: 'Diageo',
-    techNames: ['Name', 'Name', 'Name'],
-  },
+// "Who has taken a seat at the table" — each card pairs one retailer with the
+// founders they met on a call. At rest a card shows only the retailer; on
+// hover / keyboard focus / tap it opens to reveal the role + founder tiles.
+// Keeps id="what-is" so the header/footer "Who's attended" anchor still works.
+//
+// Founder logos are still placeholders (the geometric <symbol> marks below).
+// Swap each symbol for the real founder logo, keeping name + category.
+// Retailer + founder rosters are sample data — replace with the real roster.
+
+const founders = {
+  // Real founder logos — files in public/logos/tech/
+  bambuser:     { name: 'Bambuser',     category: 'Video Commerce',              logo: '/logos/tech/bambuser.png',     url: 'https://www.linkedin.com/company/bambuser/'        },
+  admotion:     { name: 'AdMotion.ai',  category: 'AI-powered Advertising',      logo: '/logos/tech/admotion.svg',     url: 'https://www.linkedin.com/company/admotionai/'      },
+  dresma:       { name: 'Dresma',       category: 'AI-powered Visuals',          logo: '/logos/tech/dresma.svg',       url: 'https://www.linkedin.com/company/dresma-com/'      },
+  glanceable:   { name: 'Glanceable',   category: 'AI-powered VoC',              logo: '/logos/tech/glanceable.svg',   url: 'https://www.linkedin.com/company/glanceable/'      },
+  quiver:       { name: 'Quiver',       category: 'Direct Store Delivery',       logo: '/logos/tech/quiver.svg',       url: 'https://www.linkedin.com/company/quiver-platform/' },
+  landingi:     { name: 'Landingi',     category: 'AI Landing Page OS',          logo: '/logos/tech/landingi.svg',     url: 'https://www.linkedin.com/company/landingi/'        },
+  audioeye:     { name: 'AudioEye',     category: 'Digital Accessibility',       logo: '/logos/tech/audioeye.svg',     url: 'https://www.linkedin.com/company/audioeye-inc/'    },
+  athena:       { name: 'Athena XAI',   category: 'E-commerce Intelligence',     logo: '/logos/tech/athena-xai.svg',   url: 'https://www.linkedin.com/showcase/athena-xai/'     },
+  mody:         { name: 'Mody AI',      category: 'Shopping Experiences',        logo: '/logos/tech/mody-ai.svg',      url: 'https://www.linkedin.com/company/modyinc/'         },
+  omi:          { name: 'Omi',          category: '3D Visuals',                  logo: '/logos/tech/omi.svg',          url: 'https://www.linkedin.com/company/omi3d/'           },
+  trackingplan: { name: 'Trackingplan', category: 'Data Compliance',            logo: '/logos/tech/trackingplan.svg', url: 'https://www.linkedin.com/company/trackingplan/'    },
+  webeyez:      { name: 'Webeyez',      category: 'Digital Analytics',           logo: '/logos/tech/webeyez.svg',      url: 'https://www.linkedin.com/company/webeyez/'         },
+  azoma:        { name: 'Azoma',        category: 'Agentic Commerce Optimization', logo: '/logos/tech/azoma.svg',      url: 'https://www.linkedin.com/company/azoma-ecomtent/'  },
+  // Placeholders — Royal Canin roster pending, still uses the geometric <symbol> marks below.
+  pixce:        { name: 'Pixce',        category: 'AI Ads',                      symbol: 'l-pixce'                    },
+  looma:        { name: 'Looma',        category: 'GEO',                         symbol: 'l-looma'                    },
+  kero:         { name: 'Kero',         category: 'Martech',                     symbol: 'l-kero'                     },
+};
+
+const cards = [
+  { name: 'Decathlon', logo: '/logos/decathlon.svg', role: 'Chief Digital Officer',
+    met: ['bambuser', 'admotion', 'dresma'] },
+  { name: 'Rakuten', logo: '/logos/rakuten.png', role: 'EVP of Finance',
+    met: ['glanceable', 'quiver', 'landingi'] },
+  { name: 'Guess', logo: '/logos/guess.svg', role: 'Chief Digital Officer',
+    met: ['audioeye', 'athena', 'mody'] },
+  { name: 'Unilever', logo: '/logos/unilever.svg', role: 'Digital, Media & Commerce Lead',
+    met: ['omi', 'trackingplan', 'webeyez'] },
+  // `tall`: stacked logo (crown + wordmark) needs a taller box to read at the same visual size.
+  { name: 'Royal Canin', logo: '/logos/royal%20canin.svg', role: 'Global Digital Commerce Director',
+    tall: true, met: ['landingi', 'audioeye', 'glanceable'] },
+  { name: 'Diageo', logo: '/logos/diageo.png', role: 'Global Director, Connected Commerce',
+    met: ['azoma', 'glanceable', 'webeyez'] },
 ];
 ---
 
-<section id="what-is" class="border-b border-hairline bg-white">
-  <div class="mx-auto max-w-7xl px-6 py-10 md:py-20">
-    <h2
-      class="mb-12 text-center text-2xl font-semibold uppercase tracking-[0.1em] text-mist md:mb-16 md:text-3xl"
-    >
-      Who has attended the meetings so far?
-    </h2>
+<section id="what-is" class="seats">
+  <div class="wrap">
+    <h1>Who has taken a seat at the table</h1>
+    <p class="sub">
+      Every call pairs one retail decision-maker with a small group of vetted
+      founders. Here's who has already met.
+    </p>
+    <span class="hint">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 12h13M13 6l6 6-6 6"/></svg>
+      Hover a retailer to see the role and the founders they met
+    </span>
 
-    <ul class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-      {
-        attendees.map((a) => (
-          <li class="attendee-card">
-            <div class="icons-row">
-              <div class="icon-col icon-col-retail">
-                <span class="icon-retail" aria-hidden="true">🛒</span>
-                <span class="icon-label">Retailer Attendee</span>
-              </div>
-              <div class="icon-col icon-col-tech">
-                <span class="icon-tech" aria-hidden="true">💻</span>
-                <span class="icon-label">Tech Attendee</span>
-              </div>
-            </div>
-
-            <div class="card-content">
-              <div class="logo-wrap">
-                <img src={`/logos/${a.slug}.png`} alt={a.name} loading="lazy" />
-              </div>
-
-              <ul class="tech-names" aria-hidden="true">
-                {a.techNames.map((n) => <li>{n}</li>)}
-              </ul>
-            </div>
-
-            <p class="role">{a.role}</p>
-          </li>
-        ))
-      }
-    </ul>
+    <div class="grid">
+      {cards.map((card) => (
+        <article
+          class:list={['deal', { tall: card.tall }]}
+          tabindex="0"
+          role="button"
+          aria-label={`${card.name} — met with ${card.met.length} founders`}
+        >
+          <div class="retailer">
+            <span class="r-eyebrow">Retailer</span>
+            <div class="r-logo"><img src={card.logo} alt={card.name} /></div>
+            <p class="r-role">{card.role}</p>
+            <span class="r-chip">
+              met {card.met.length} founders
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M5 12h13M13 7l6 5-6 5"/></svg>
+            </span>
+          </div>
+          <div class="connector"><span>met with</span></div>
+          <div class="tech"><div class="tech-inner">
+            <div class="t-eyebrow">Founders at the table</div>
+            <ul class="t-logos">
+              {card.met.map((key) => (
+                <li>
+                  {founders[key].url
+                    ? <a class="tile" href={founders[key].url} target="_blank" rel="noopener noreferrer" aria-label={`${founders[key].name} on LinkedIn`}>
+                        {founders[key].logo
+                          ? <img src={founders[key].logo} alt={founders[key].name} loading="lazy" />
+                          : <svg><use href={`#${founders[key].symbol}`}/></svg>}
+                      </a>
+                    : <span class="tile">
+                        {founders[key].logo
+                          ? <img src={founders[key].logo} alt={founders[key].name} loading="lazy" />
+                          : <svg><use href={`#${founders[key].symbol}`}/></svg>}
+                      </span>}
+                  <span class="t-name">{founders[key].name}<small>{founders[key].category}</small></span>
+                </li>
+              ))}
+            </ul>
+          </div></div>
+        </article>
+      ))}
+    </div>
   </div>
+
+  <!-- Placeholder founder marks — still used by the Royal Canin card until its real roster arrives. -->
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+    <symbol id="l-pixce" viewBox="0 0 32 32"><circle cx="16" cy="16" r="11" fill="none" stroke="#2E6BE6" stroke-width="3"/><circle cx="16" cy="16" r="3.2" fill="#2E6BE6"/></symbol>
+    <symbol id="l-looma" viewBox="0 0 32 32"><rect x="7" y="7" width="18" height="18" rx="9" fill="none" stroke="#118AB2" stroke-width="3"/><path d="M12 16h8" stroke="#118AB2" stroke-width="3" stroke-linecap="round"/></symbol>
+    <symbol id="l-kero" viewBox="0 0 32 32"><path d="M10 6v20M10 16l10-10M10 16l10 10" fill="none" stroke="#2C3E50" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  </svg>
 </section>
 
+<script>
+  document.querySelectorAll('.deal').forEach((card) => {
+    card.addEventListener('click', (e) => {
+      // Let founder logo links navigate without toggling the card open/closed.
+      if ((e.target as HTMLElement).closest('a')) return;
+      card.classList.toggle('open');
+    });
+    card.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        card.classList.toggle('open');
+      }
+    });
+  });
+</script>
+
 <style>
-  .attendee-card {
-    position: relative;
-    background: #f9f9f9;
-    border: 1px solid #e5e5e5;
-    border-radius: 8px;
-    padding: 20px;
-    overflow: hidden;
-    transition: border-color 0.25s ease;
+  /* Design tokens for this section (blue accent — "brass" for legacy reasons).
+     Scoped to the section so they don't leak into the monochrome page. */
+  .seats {
+    --bg: #ffffff;            /* white section background */
+    --card: #ffffff;
+    --ink: #181b20;
+    --muted: #647085;
+    --faint: #93a0b4;
+    --line: #d7e2f1;
+    --tile-line: #dfe7f3;
+    --brass: #4e7cc0;        /* lighter blue accent */
+    --brass-soft: #4e7cc033; /* translucent blue for the focus ring */
+    --radius: 16px;
+    --serif: 'Newsreader', Georgia, 'Times New Roman', serif;
+
+    background: var(--bg);
+    color: var(--ink);
+    padding: 56px 20px 80px;
+    -webkit-font-smoothing: antialiased;
+  }
+  .seats *,
+  .seats *::before,
+  .seats *::after {
+    box-sizing: border-box;
   }
 
-  .attendee-card:hover {
-    border-color: #cfcfcf;
+  .wrap { max-width: 1080px; margin: 0 auto; }
+
+  /* ---------- Section header ---------- */
+  .seats h1 {
+    font-family: var(--serif); font-weight: 500;
+    font-size: clamp(28px, 4vw, 42px); line-height: 1.1;
+    letter-spacing: -0.01em; margin: 0 0 12px; max-width: 15ch;
+  }
+  .sub { color: var(--muted); font-size: 16px; max-width: 52ch; margin: 0 0 6px; line-height: 1.55; }
+  .hint { display: inline-flex; align-items: center; gap: 7px; font-size: 13px; color: var(--faint); margin-top: 2px; }
+  .hint svg { width: 15px; height: 15px; }
+
+  /* ---------- Card grid ---------- */
+  .grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; margin-top: 34px; }
+  @media (max-width: 760px) { .grid { grid-template-columns: 1fr; } }
+
+  /* ---------- The deal card ---------- */
+  .deal {
+    position: relative; background: var(--card);
+    border: 1px solid var(--line); border-radius: var(--radius);
+    display: flex; align-items: stretch; overflow: hidden;
+    min-height: 168px; cursor: pointer; outline: none;
+    box-shadow: 0 5px 20px -8px rgba(78, 124, 192, 0.32), 0 1px 3px rgba(78, 124, 192, 0.10);
+    transition: box-shadow 0.4s ease, border-color 0.4s ease, transform 0.4s ease;
+  }
+  .deal:hover, .deal:focus-within, .deal.open {
+    box-shadow: 0 18px 44px -16px rgba(78, 124, 192, 0.42), 0 2px 6px rgba(78, 124, 192, 0.12);
+    border-color: #c4d4ec; transform: translateY(-2px);
+  }
+  .deal:focus-visible { box-shadow: 0 0 0 3px var(--brass-soft), 0 18px 44px -16px rgba(78, 124, 192, 0.42), 0 2px 6px rgba(78, 124, 192, 0.12); }
+
+  /* Retailer side */
+  .retailer {
+    flex: 1 1 100%;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    text-align: center; padding: 26px 22px;
+    transition: flex-basis 0.55s cubic-bezier(0.22, 0.7, 0.2, 1);
+  }
+  .r-eyebrow { font-size: 10.5px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--faint); font-weight: 600; margin: 0 0 9px; }
+  .r-logo { height: 34px; display: flex; align-items: center; justify-content: center; transition: height 0.5s ease; }
+  .r-logo img { height: 100%; width: auto; max-width: 170px; object-fit: contain; display: block; }
+  /* Stacked logos (e.g. Royal Canin) need a taller box to match the horizontal wordmarks. */
+  .deal.tall .r-logo { height: 54px; }
+
+  /* Role — hidden at rest, revealed on open */
+  .r-role {
+    font-size: 13px; color: var(--muted); line-height: 1.4; max-width: 24ch; margin: 0;
+    opacity: 0; max-height: 0; transform: translateY(-4px); overflow: hidden;
+    transition: opacity 0.35s ease 0.12s, max-height 0.5s ease, transform 0.35s ease 0.12s, margin-top 0.4s ease;
+  }
+  /* Chip — shown at rest, collapses on open */
+  .r-chip {
+    display: inline-flex; align-items: center; gap: 5px;
+    font-size: 12px; color: var(--brass); font-weight: 600;
+    margin-top: 11px; max-height: 24px; opacity: 1; overflow: hidden;
+    transition: opacity 0.3s ease, max-height 0.4s ease, margin-top 0.4s ease;
+  }
+  .r-chip svg { width: 13px; height: 13px; }
+
+  /* Connector (signature) */
+  .connector {
+    flex: 0 0 0; overflow: hidden; position: relative;
+    display: flex; align-items: center; justify-content: center;
+    transition: flex-basis 0.55s cubic-bezier(0.22, 0.7, 0.2, 1);
+  }
+  .connector::before {
+    content: ""; position: absolute; top: 22px; bottom: 22px; left: 50%; width: 1px;
+    background: linear-gradient(var(--brass), transparent 12%, transparent 88%, var(--brass)); opacity: 0.55;
+  }
+  .connector span {
+    font-family: var(--serif); font-style: italic; font-size: 13px; color: var(--brass);
+    background: var(--card); padding: 5px 2px; white-space: nowrap;
+    writing-mode: vertical-rl; transform: rotate(180deg);
+    opacity: 0; transition: opacity 0.4s ease 0.12s;
   }
 
-  .icons-row {
-    display: flex;
-    align-items: flex-start;
-    justify-content: space-between;
-    font-size: 1.125rem;
-    line-height: 1;
+  /* Tech side */
+  .tech {
+    flex: 0 0 0; overflow: hidden;
+    display: flex; flex-direction: column; justify-content: center;
+    background: linear-gradient(180deg, #f3f7fd, #ffffff);
+    transition: flex-basis 0.55s cubic-bezier(0.22, 0.7, 0.2, 1);
+  }
+  .tech-inner { padding: 22px 22px 22px 4px; min-width: 300px; }
+  .t-eyebrow {
+    font-size: 10.5px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--faint); font-weight: 600; margin-bottom: 12px;
+    opacity: 0; transform: translateX(14px); transition: all 0.45s ease 0.1s;
+  }
+  .t-logos { list-style: none; margin: 0; padding: 0; display: grid; gap: 9px; }
+  .t-logos li { display: flex; align-items: center; gap: 12px; opacity: 0; transform: translateX(18px); transition: opacity 0.45s ease, transform 0.45s ease; }
+  .t-logos li:nth-child(1) { transition-delay: 0.14s; }
+  .t-logos li:nth-child(2) { transition-delay: 0.22s; }
+  .t-logos li:nth-child(3) { transition-delay: 0.30s; }
+  .tile {
+    flex: 0 0 46px; height: 46px; width: 46px; border-radius: 11px; background: #fff;
+    border: 1px solid var(--tile-line); display: flex; align-items: center; justify-content: center;
+    box-shadow: 0 1px 2px rgba(30, 55, 100, 0.06);
+  }
+  a.tile { cursor: pointer; transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease; }
+  a.tile:hover, a.tile:focus-visible {
+    border-color: var(--brass); transform: translateY(-1px);
+    box-shadow: 0 3px 10px -3px rgba(78, 124, 192, 0.4); outline: none;
+  }
+  .tile svg { width: 26px; height: 26px; display: block; }
+  .tile img { width: 32px; height: 32px; object-fit: contain; display: block; }
+  .t-name { font-size: 14px; font-weight: 600; color: var(--ink); line-height: 1.2; }
+  .t-name small { display: block; font-weight: 500; color: var(--faint); font-size: 11.5px; margin-top: 2px; }
+
+  /* ---- OPEN STATE ---- */
+  .deal:hover .retailer, .deal:focus-within .retailer, .deal.open .retailer { flex-basis: 40%; }
+  .deal:hover .r-logo, .deal:focus-within .r-logo, .deal.open .r-logo { height: 26px; }
+  .deal.tall:hover .r-logo, .deal.tall:focus-within .r-logo, .deal.tall.open .r-logo { height: 42px; }
+  .deal:hover .r-role, .deal:focus-within .r-role, .deal.open .r-role { opacity: 1; max-height: 60px; transform: translateY(0); margin-top: 8px; }
+  .deal:hover .r-chip, .deal:focus-within .r-chip, .deal.open .r-chip { opacity: 0; max-height: 0; margin-top: 0; }
+  .deal:hover .connector, .deal:focus-within .connector, .deal.open .connector { flex-basis: 52px; }
+  .deal:hover .connector span, .deal:focus-within .connector span, .deal.open .connector span { opacity: 1; }
+  .deal:hover .tech, .deal:focus-within .tech, .deal.open .tech { flex-basis: 60%; }
+  .deal:hover .t-eyebrow, .deal:focus-within .t-eyebrow, .deal.open .t-eyebrow,
+  .deal:hover .t-logos li, .deal:focus-within .t-logos li, .deal.open .t-logos li { opacity: 1; transform: translateX(0); }
+
+  /* ---------- Touch / no-hover: everything shown, stacked ---------- */
+  @media (hover: none) {
+    .deal { flex-direction: column; cursor: default; }
+    .retailer { flex-basis: auto !important; border-bottom: 1px solid var(--line); }
+    .r-logo { height: 30px !important; }
+    .deal.tall .r-logo { height: 48px !important; }
+    .r-role { opacity: 1 !important; max-height: 60px !important; transform: none !important; margin-top: 8px !important; }
+    .r-chip { display: none; }
+    .connector { display: none; }
+    .tech { flex-basis: auto !important; background: #fff; }
+    .tech-inner { min-width: 0; padding: 20px; }
+    .t-eyebrow, .t-logos li { opacity: 1 !important; transform: none !important; }
   }
 
-  .icon-col {
-    display: flex;
-    flex-direction: column;
-    gap: 0.375rem;
-  }
-
-  .icon-col-retail {
-    align-items: flex-start;
-  }
-
-  .icon-col-tech {
-    align-items: flex-end;
-  }
-
-  .icon-retail,
-  .icon-tech {
-    opacity: 0;
-    transition: opacity 0.25s ease, transform 0.25s ease;
-  }
-
-  .icon-retail {
-    transform: translateX(-4px);
-  }
-
-  .icon-tech {
-    transform: translateX(4px);
-  }
-
-  .icon-label {
-    font-size: 0.6875rem;
-    color: var(--color-fog);
-    opacity: 0;
-    transition: opacity 0.25s ease;
-  }
-
-  .attendee-card:hover .icon-retail,
-  .attendee-card:hover .icon-tech {
-    opacity: 1;
-    transform: translateX(0);
-  }
-
-  .attendee-card:hover .icon-label {
-    opacity: 1;
-  }
-
-  .card-content {
-    position: relative;
-    height: 2.75rem;
-    margin-top: 1.25rem;
-  }
-
-  .logo-wrap {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    height: 2.25rem;
-    display: flex;
-    align-items: center;
-    transform: translate(-50%, -50%);
-    transition: left 0.35s ease, transform 0.35s ease;
-  }
-
-  .attendee-card:hover .logo-wrap {
-    left: 0;
-    transform: translate(0, -50%);
-  }
-
-  .logo-wrap img {
-    max-height: 100%;
-    max-width: 7rem;
-    object-fit: contain;
-  }
-
-  .tech-names {
-    position: absolute;
-    top: 50%;
-    right: 0;
-    margin: 0;
-    list-style: none;
-    text-align: right;
-    opacity: 0;
-    transform: translate(8px, -50%);
-    transition: opacity 0.3s ease 0.05s, transform 0.3s ease 0.05s;
-    pointer-events: none;
-  }
-
-  .attendee-card:hover .tech-names {
-    opacity: 1;
-    transform: translate(0, -50%);
-  }
-
-  .tech-names li {
-    font-size: 0.8125rem;
-    font-weight: 600;
-    line-height: 1.4;
-    color: #0a0a0a;
-  }
-
-  .role {
-    margin-top: 1rem;
-    text-align: center;
-    font-size: 0.8125rem;
-    color: var(--color-fog);
-    transition: opacity 0.2s ease;
-  }
-
-  .attendee-card:hover .role {
-    opacity: 0;
-  }
-
+  /* ---------- Reduced motion ---------- */
   @media (prefers-reduced-motion: reduce) {
-    .attendee-card,
-    .icon-tech,
-    .logo-wrap,
-    .tech-names,
-    .role {
-      transition: none;
-    }
+    .seats * { transition: none !important; }
   }
 </style>

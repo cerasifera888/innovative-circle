@@ -38,6 +38,15 @@ const canonical = new URL(Astro.url.pathname, Astro.site);
 
     <meta name="theme-color" content="#ffffff" />
 
+    <!-- Newsreader — display/accent face for the "seat at the table" section.
+         Inter (body) is self-hosted via @fontsource-variable/inter. -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@1,6..72,400;0,6..72,500&display=swap"
+      rel="stylesheet"
+    />
+
     <!--
       Analytics — required to measure the 20% conversion goal.
       Uncomment and set your domain after deploy (Plausible example).
