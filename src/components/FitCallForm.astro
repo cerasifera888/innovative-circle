@@ -19,11 +19,11 @@ const fields = [
 ];
 ---
 
-<section id="book" class="border-b border-hairline bg-graphite">
+<section id="book" class="border-b border-hairline bg-white">
   <div class="mx-auto max-w-2xl px-6 py-24 md:py-32">
     <div class="text-center">
       <p class="mb-5 text-xs uppercase tracking-[0.22em] text-fog">Book your fit call</p>
-      <h2 class="text-balance text-3xl font-semibold leading-tight tracking-tight md:text-4xl">
+      <h2 class="text-balance font-serif text-3xl font-semibold leading-tight tracking-tight md:text-4xl">
         Ready to explore meaningful collaboration?
       </h2>
       <p class="mx-auto mt-5 max-w-xl text-lg text-mist/75">
@@ -63,7 +63,7 @@ const fields = [
                   required={f.required}
                   autocomplete={f.autocomplete}
                   placeholder={f.placeholder}
-                  class="w-full rounded-xl border border-hairline bg-ink px-4 py-3 text-mist placeholder-fog/50 transition focus-visible:border-mist/50 focus-visible:ring-2 focus-visible:ring-mist/20"
+                  class="reg-field w-full rounded-xl bg-white px-4 py-3 text-mist placeholder-fog/50"
                 />
               </label>
             ))
@@ -85,7 +85,7 @@ const fields = [
 
         <button
           type="submit"
-          class="mt-8 inline-flex w-full items-center justify-center gap-2 rounded-full bg-mist px-7 py-4 text-base font-medium tracking-tight text-ink transition hover:bg-fog focus-visible:ring-2 focus-visible:ring-mist/70 focus-visible:ring-offset-2 focus-visible:ring-offset-graphite disabled:opacity-60"
+          class="mt-8 inline-flex w-full items-center justify-center gap-2 rounded-full bg-mist px-7 py-4 text-base font-medium tracking-tight text-ink transition hover:bg-fog focus-visible:ring-2 focus-visible:ring-mist/70 focus-visible:ring-offset-2 focus-visible:ring-offset-white disabled:opacity-60"
         >
           Request a Fit Call
         </button>
@@ -113,6 +113,35 @@ const fields = [
     </div>
   </div>
 </section>
+
+<style>
+  /* Registration inputs — bordered "card" treatment that lifts on interaction.
+     Mirrors the blue-accent tokens/behaviour of the SocialProof (WhatIs) cards. */
+  #book {
+    --line: #d7e2f1; /* resting border */
+    --brass: #4e7cc0; /* main blue accent */
+    --brass-soft: #4e7cc033; /* translucent blue — focus ring */
+  }
+
+  #book .reg-field {
+    border: 1px solid var(--line);
+    transition: box-shadow 0.4s ease, border-color 0.4s ease;
+  }
+
+  /* Soft blue-ish lift on hover / focus */
+  #book .reg-field:hover {
+    border-color: #c4d4ec; /* light blue-gray */
+    box-shadow: 0 14px 40px -18px rgba(30, 55, 100, 0.26);
+  }
+
+  #book .reg-field:focus {
+    outline: none;
+    border-color: #c4d4ec;
+    box-shadow:
+      0 0 0 3px var(--brass-soft),
+      0 14px 40px -18px rgba(30, 55, 100, 0.26);
+  }
+</style>
 
 <script>
   const form = document.querySelector<HTMLFormElement>('form[name="fit-call"]');
