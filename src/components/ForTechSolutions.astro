@@ -1,0 +1,234 @@
+---
+// "For Tech Solutions" — editorial black-on-white contrast section.
+// Self-contained: markup, scoped tokens/CSS, IntersectionObserver entrance.
+//
+// Fonts reuse the site setup — Inter (self-hosted via @fontsource-variable/inter,
+// weights 400/500/600) and Newsreader (Google Fonts <link> in Base.astro). No
+// extra font imports needed here.
+//
+// Entrance motion has three presets driven by data-motion: "editorial" (default),
+// "subtle", "off". The section id stays "tech-solutions" so the header/footer nav
+// anchors keep working. The CTA points at #book — the FitCallForm lead-capture
+// section (FitCallForm.astro has id="book").
+---
+
+<!-- ===================== PRODUCTION SECTION ===================== -->
+<section class="ic-tech" id="tech-solutions" data-motion="editorial">
+  <div class="ic-tech__inner">
+
+    <p class="ic-eyebrow reveal" style="--d:0s">For tech solutions</p>
+
+    <h2 class="ic-headline reveal" style="--d:.06s"><span>For emerging technology founders &amp; teams</span></h2>
+
+    <p class="ic-lede reveal" style="--d:.14s">Selling new tech to enterprise retail usually means demo queues and gatekeepers. The Circle skips that — you meet the operators who actually decide.</p>
+
+    <div class="ic-contrast reveal" style="--d:.22s">
+      <div class="ic-col ic-col--old">
+        <p class="ic-col__label">Everywhere else</p>
+        <ul class="ic-list">
+          <li class="ic-item"><svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><line x1="3.5" y1="8" x2="12.5" y2="8" stroke="#c4c4c4" stroke-width="1.4" stroke-linecap="round"/></svg>Chasing gatekeepers and procurement queues</li>
+          <li class="ic-item"><svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><line x1="3.5" y1="8" x2="12.5" y2="8" stroke="#c4c4c4" stroke-width="1.4" stroke-linecap="round"/></svg>Guessing at fit from second-hand signals</li>
+          <li class="ic-item"><svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><line x1="3.5" y1="8" x2="12.5" y2="8" stroke="#c4c4c4" stroke-width="1.4" stroke-linecap="round"/></svg>One-way sales pitches on a demo call</li>
+          <li class="ic-item"><svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><line x1="3.5" y1="8" x2="12.5" y2="8" stroke="#c4c4c4" stroke-width="1.4" stroke-linecap="round"/></svg>Starting every introduction from cold</li>
+        </ul>
+      </div>
+      <div class="ic-col ic-col--new">
+        <p class="ic-col__label">Inside the Circle</p>
+        <ul class="ic-list">
+          <li class="ic-item"><svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="M3.5 8.5l3 3 6-7" stroke="#0d0d0d" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg><span><strong>Reach real buyers</strong> who own the budget and roadmap</span></li>
+          <li class="ic-item"><svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="M3.5 8.5l3 3 6-7" stroke="#0d0d0d" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg><span><strong>Validate</strong> against live operational problems</span></li>
+          <li class="ic-item"><svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="M3.5 8.5l3 3 6-7" stroke="#0d0d0d" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg><span><strong>Co-create</strong> the solution together, in the room</span></li>
+          <li class="ic-item"><svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="M3.5 8.5l3 3 6-7" stroke="#0d0d0d" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg><span><strong>Borrow credibility</strong> from leading merchants</span></li>
+        </ul>
+      </div>
+    </div>
+
+    <p class="ic-eligibility reveal" style="--d:.3s">
+      <svg width="18" height="18" viewBox="0 0 18 18" aria-hidden="true"><circle cx="9" cy="9" r="6.4" stroke="currentColor" stroke-width="1.4" fill="none"/><circle cx="9" cy="9" r="1.8" fill="currentColor"/></svg>
+      <span><strong>Who this is for — </strong>early-stage teams (10–50 people) in AI Ads, GEO, AI discoverability, Martech, Retailtech, and Conversion Rate Optimization.</span>
+    </p>
+
+    <a class="ic-fit reveal" style="--d:.36s" href="#book">
+      <span class="ic-fit__label">See if you're a fit</span>
+      <span class="ic-fit__arrow" aria-hidden="true">→</span>
+    </a>
+
+  </div>
+</section>
+<!-- =================== END PRODUCTION SECTION =================== -->
+
+<script>
+  /* Entrance reveal — this small observer IS production-safe (keep it). */
+  (function () {
+    var section = document.querySelector('.ic-tech');
+    if (!section) return;
+    var reveals = section.querySelectorAll('.reveal');
+    var headline = section.querySelector('.ic-headline');
+
+    function show() {
+      reveals.forEach(function (el) { el.classList.add('is-in'); });
+      if (headline) headline.classList.add('is-in');
+      section.classList.add('ic-rows-in');
+    }
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) { if (e.isIntersecting) { show(); io.disconnect(); } });
+    }, { threshold: 0.2 });
+    io.observe(section);
+  })();
+</script>
+
+<style>
+  /* Local design tokens — scoped to this section so the generic names
+     (--ink, --bg, …) can't collide with global styles. */
+  .ic-tech {
+    --ink:#0d0d0d;
+    --ink-soft:#333333;
+    --text:#5f5f5f;
+    --muted:#8a8a8a;
+    --faint:#9a9a9a;
+    --hair:#ececec;
+    --hair-2:#e9e9e9;
+    --panel:#fafafa;
+    --bg:#ffffff;
+    --ease:cubic-bezier(.22,.61,.36,1);
+    --dur:.62s;
+  }
+
+  .ic-tech *{box-sizing:border-box;}
+
+
+  .ic-tech{background:var(--bg);padding:96px 32px;color:var(--ink);font-family:'Inter',system-ui,sans-serif;-webkit-font-smoothing:antialiased;}
+  .ic-tech__inner{max-width:1120px;margin:0 auto;}
+
+  .ic-eyebrow{
+    font-size:12px;font-weight:500;letter-spacing:.14em;text-transform:uppercase;
+    color:var(--faint);margin:0 0 20px;
+  }
+
+  .ic-headline{
+    font-family:'Newsreader',Georgia,serif;font-weight:500;
+    font-size:clamp(30px,4.6vw,50px);line-height:1.08;letter-spacing:-.012em;
+    color:var(--ink);margin:0 0 20px;max-width:16ch;
+  }
+  /* clip-mask wrapper so the serif line can wipe up on entrance */
+  .ic-headline > span{display:inline-block;}
+
+  .ic-lede{
+    font-size:clamp(15px,1.5vw,17px);line-height:1.6;color:var(--text);
+    max-width:60ch;margin:0 0 40px;
+  }
+
+  .ic-contrast{
+    display:grid;grid-template-columns:1fr 1fr;gap:0;
+    border:1px solid var(--hair);border-radius:14px;overflow:hidden;
+  }
+  .ic-col{padding:30px 32px;}
+  .ic-col--old{background:var(--panel);border-right:1px solid var(--hair);}
+  .ic-col--new{background:var(--bg);}
+  .ic-col__label{
+    font-size:12px;font-weight:600;letter-spacing:.07em;text-transform:uppercase;
+    margin:0 0 22px;
+  }
+  .ic-col--old .ic-col__label{color:var(--faint);}
+  .ic-col--new .ic-col__label{color:var(--ink);}
+
+  .ic-list{list-style:none;margin:0;padding:0;}
+  .ic-item{
+    display:flex;gap:12px;align-items:flex-start;
+    padding:9px 10px;margin:0 -10px;border-radius:8px;
+    font-size:15px;line-height:1.5;
+    transition:transform .18s var(--ease),background-color .18s var(--ease);
+  }
+  .ic-item svg{flex:none;margin-top:2px;transition:transform .18s var(--ease);}
+  .ic-col--old .ic-item{color:var(--muted);}
+  .ic-col--new .ic-item{color:var(--ink-soft);}
+  .ic-col--new .ic-item strong{font-weight:600;color:var(--ink);}
+  /* hover (both columns): nudge right, faint tint, mark scales up slightly */
+  .ic-item:hover{transform:translateX(5px);background-color:rgba(13,13,13,.035);}
+  .ic-item:hover svg{transform:scale(1.15);}
+  /* "Inside the Circle" rows slide right at a higher speed — high specificity so
+     it beats both the entrance `transform:none` clamp and the editorial preset's
+     slower transition on new-column items */
+  .ic-tech[data-motion].ic-rows-in .ic-col--new .ic-item:hover{
+    transform:translateX(5px);
+    transition:transform .12s var(--ease),background-color .12s var(--ease);
+  }
+  /* hover: the dash on an "everywhere else" row turns light red */
+  .ic-col--old .ic-item svg line{transition:stroke .25s var(--ease);}
+  .ic-col--old .ic-item:hover svg line{stroke:#e08585;}
+
+  .ic-eligibility{
+    display:flex;gap:12px;align-items:flex-start;
+    margin:26px 0 0;padding:18px 22px;
+    border:1px solid var(--hair);border-radius:12px;
+    font-size:14px;line-height:1.55;color:var(--text);
+    transition:border-color .3s var(--ease);
+  }
+  .ic-eligibility:hover{border-color:#dcdcdc;}
+  .ic-eligibility svg{flex:none;margin-top:1px;color:var(--ink);}
+  .ic-eligibility strong{font-weight:600;color:var(--ink);}
+
+  /* Quiet inline CTA — no button weight */
+  .ic-fit{
+    display:inline-flex;align-items:center;gap:8px;
+    margin-top:30px;
+    font-size:15px;font-weight:500;color:var(--ink);text-decoration:none;
+    position:relative;
+  }
+  .ic-fit__label{position:relative;}
+  .ic-fit__label::after{
+    content:"";position:absolute;left:0;bottom:-3px;height:1px;width:100%;
+    background:var(--ink);transform:scaleX(0);transform-origin:left;
+    transition:transform .32s var(--ease);
+  }
+  .ic-fit:hover .ic-fit__label::after,
+  .ic-fit:focus-visible .ic-fit__label::after{transform:scaleX(1);}
+  .ic-fit__arrow{display:inline-block;transition:transform .32s var(--ease);}
+  .ic-fit:hover .ic-fit__arrow,
+  .ic-fit:focus-visible .ic-fit__arrow{transform:translateX(5px);}
+  .ic-fit:focus-visible{outline:none;}
+  .ic-fit:focus-visible .ic-fit__label{outline:2px solid var(--ink);outline-offset:4px;border-radius:2px;}
+
+  /* ---------- ENTRANCE MOTION ---------- */
+  .reveal{opacity:0;}
+  .ic-tech[data-motion] .reveal{
+    transition:opacity var(--dur) var(--ease), transform var(--dur) var(--ease);
+    transition-delay:var(--d,0s);
+  }
+
+  /* preset: editorial (default) */
+  .ic-tech[data-motion="editorial"] .reveal{transform:translateY(16px);}
+  .ic-tech[data-motion="editorial"] .ic-headline{clip-path:inset(0 0 100% 0);transform:translateY(0);transition:clip-path .8s var(--ease),opacity .8s var(--ease);}
+  .ic-tech[data-motion="editorial"] .ic-headline.is-in{clip-path:inset(0 0 0 0);}
+  .ic-tech[data-motion="editorial"] .ic-col--new .ic-item{opacity:0;transform:translateY(10px);transition:opacity .5s var(--ease),transform .5s var(--ease);}
+  .ic-tech[data-motion="editorial"].ic-rows-in .ic-col--new .ic-item{opacity:1;transform:none;}
+  .ic-tech[data-motion="editorial"].ic-rows-in .ic-col--new .ic-item:nth-child(1){transition-delay:.28s;}
+  .ic-tech[data-motion="editorial"].ic-rows-in .ic-col--new .ic-item:nth-child(2){transition-delay:.36s;}
+  .ic-tech[data-motion="editorial"].ic-rows-in .ic-col--new .ic-item:nth-child(3){transition-delay:.44s;}
+  .ic-tech[data-motion="editorial"].ic-rows-in .ic-col--new .ic-item:nth-child(4){transition-delay:.52s;}
+
+  /* preset: subtle (soft fades, minimal travel, no clip) */
+  .ic-tech[data-motion="subtle"] .reveal{transform:translateY(8px);--dur:.5s;}
+
+  /* preset: off */
+  .ic-tech[data-motion="off"] .reveal{opacity:1;transform:none;transition:none;}
+  .ic-tech[data-motion="off"] .ic-headline{clip-path:none;}
+  .ic-tech[data-motion="off"] .ic-col--new .ic-item{opacity:1;transform:none;}
+
+  .reveal.is-in{opacity:1;transform:none;}
+
+  @media (prefers-reduced-motion: reduce){
+    .ic-tech[data-motion] .reveal,
+    .ic-tech .ic-headline,
+    .ic-col--new .ic-item{opacity:1 !important;transform:none !important;clip-path:none !important;transition:none !important;}
+    .ic-fit__arrow,.ic-col--new .ic-item,.ic-fit__label::after{transition:none !important;}
+  }
+
+  /* ---------- responsive ---------- */
+  @media (max-width:720px){
+    .ic-tech{padding:64px 22px;}
+    .ic-contrast{grid-template-columns:1fr;}
+    .ic-col--old{border-right:none;border-bottom:1px solid var(--hair);}
+    .ic-headline{max-width:none;}
+  }
+</style>
