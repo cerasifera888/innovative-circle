@@ -3,16 +3,6 @@ import Button from './Button.astro';
 ---
 
 <section id="top" class="relative overflow-hidden">
-  <!-- Light-blue wash behind the headline (pure CSS, no external assets) -->
-  <div class="pointer-events-none absolute inset-0 -z-10" aria-hidden="true">
-    <!-- blue wash, fading to white at the bottom to meet the next section -->
-    <div
-      class="absolute inset-0"
-      style="background: linear-gradient(180deg, var(--color-sky-mist) 0%, var(--color-sky-haze) 48%, #ffffff 100%);"
-    >
-    </div>
-  </div>
-
   <div class="mx-auto max-w-5xl px-6 pb-28 pt-16 text-center md:pb-40 md:pt-24">
     <p
       class="mb-7 inline-flex w-fit items-center rounded-full border border-hairline px-4 py-1.5 text-xs uppercase tracking-[0.22em] text-fog"
